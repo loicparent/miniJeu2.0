@@ -2,14 +2,15 @@ body {
     padding: 0;
     margin: 0;
     background-color: rgb( 220,220,220 );
+    font-family: 'Raleway', "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
 }
 h1 {
     text-align: center;
     font-weight: bold;
-    font-size: 2em;
+    font-size: 3em;
 }
 .gameZone {
-    width: 960px;
+    width: 100%;
     margin: auto;
     position: relative;
 }
@@ -36,7 +37,7 @@ h1 {
                 transform: scale(1);
     }
 }
--webkit-@keyframes button {
+@-webkit-keyframes button {
     0% {
         -webkit-transform: scale(1);
            -moz-transform: scale(1);
@@ -59,7 +60,7 @@ h1 {
                 transform: scale(1);
     }
 }
--ms-@keyframes button {
+@-ms-keyframes button {
     0% {
         -webkit-transform: scale(1);
            -moz-transform: scale(1);
@@ -82,7 +83,7 @@ h1 {
                 transform: scale(1);
     }
 }
--o-@keyframes button {
+@-o-keyframes button {
     0% {
         -webkit-transform: scale(1);
            -moz-transform: scale(1);
@@ -105,9 +106,9 @@ h1 {
                 transform: scale(1);
     }
 }
-h2 {
+.start {
     position: absolute;
-    left: 43%;
+    left: 45%;
     top: 38%;
     background-color: rgb( 220,220,220 );
     padding: 1em;
@@ -128,32 +129,84 @@ h2 {
     animation-iteration-count: infinite;
     cursor: pointer;
 }
-h2:hover {
+.start:hover {
     color: #fff;
-}
-.sounds {
-    display: block;
-    text-align: center;
-    cursor: pointer;
-    text-decoration: underline;
 }
 .info {
     text-align: center;
 }
 canvas {
     display: block;
-    margin: 1em auto;
-    border-radius: 5px;
-    box-shadow: 0 4px 10px gray;
     background-color: #fff;
     cursor: move;
-}
-p.score {
-    text-align: center;
-    font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
-    font-size: 1.5em;
-    margin-top: 0em;
+    z-index: 0;
 }
 p span.scoreResult {
     font-weight: bold;
+}
+
+
+
+
+/******************************
+        Ajout de code
+*******************************/
+
+.modal {
+    position: absolute;
+    top: 10%; bottom: 70%;
+    left: 0; right: 0;
+    z-index: 200;
+}
+.modal div {
+    position: relative;
+    margin: 0px auto;
+    padding: 10px;
+    max-width: 700px;
+}
+.modal h2 {
+    text-align: center;
+}
+.modal a {
+    text-decoration: none;
+    margin-top: 1em;
+    display: block;
+    padding: 0.5em;
+    background-color: green;
+    border: 1px solid green;
+    color: white;
+    text-align: center;
+    font-size: 1.5em;
+}
+.modal a:hover {
+    background-color: transparent;
+    color: green;
+}
+.modal.hidden {
+    display: none;
+}
+.endScore {
+    display: block;
+    font-size: 2em;
+}
+p.score {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    text-align: center;
+    font-size: 1.5em;
+    margin-top: 0em;
+    z-index: 10;
+}
+.sounds {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 40px;
+    height: 40px;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: underline;
+    z-index: 10;
 }
