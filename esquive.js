@@ -2,14 +2,12 @@
 
 	"use strict";
 
-	window.Jeu = function( oApplication ){
+	window.Esquive = function( oApplication ){
 
 		var ctx = oApplication.context,
 		iAnimationRequestId = 0,
 		score = 0,
 		isGameOver = false,
-		speedModifier = 1,
-		sens = "h",
 		nBonus = 0,
         oStart = new Audio("./sounds/start.mp3"),
         oGOSound = new Audio("./sounds/lose.mp3"),
@@ -26,7 +24,8 @@
 				"speedX" : null,
 				"speedY" : null,
 				"colour" : null,
-				"bounce" : null
+				"bounce" : null,
+				"startNumber" : 15
 			},
 			"bonus" : {
 				"x" : null,
@@ -79,7 +78,6 @@
 					ctx.beginPath();
 					ctx.fillStyle = 'hsl(' + bubble.colour + ',80%,60%)';
 					ctx.arc( bubble.x, bubble.y, bubble.radius, 0, Math.PI * 2, true );
-					ctx.globalAlpha = bubble.opacity;
 					ctx.fill();
 					ctx.closePath();
 				} );
@@ -91,7 +89,7 @@
 				oZone.render();
 			},
 			"generateBubble" : function(){
-				var bubbleNumber = 10;
+				var bubbleNumber = oZone.bubble.startNumber;
 				for( bubbleNumber; bubbleNumber > 0; bubbleNumber-- ){
 					var x = oApplication.width / 8;
 					var y = oApplication.height / 8;
@@ -119,11 +117,12 @@
 		};
 
 		var gameOver = function (){
-			var restart = confirm('GAME OVER \n votre score est de: '+ nBonus +' \n Vous rejouez?');
-			if( restart ){
+			window.cancelAnimationFrame( iAnimationRequestId );
+			document.querySelector( '.endScore' ).innerHTML = nBonus;
+			document.querySelector( '.end_modal' ).classList.remove("hidden");
+			document.querySelector( '.restart' ).addEventListener( "click", function(){
 				window.location.reload( true );
-				window.cancelAnimationFrame( iAnimationRequestId );
-			}
+			}, false );
 	    }
 
 	    var changeBonus = function() {
@@ -181,22 +180,23 @@
 		//Vérifier si on met le son ou pas
         document.querySelector( '.sounds' ).addEventListener('click', function(evt) {
             var soundButton = document.querySelector( '.sounds' );
+            var soundButtonImg = document.querySelector( '.sounds img' );
             if( withSounds == 1 ){
                 withSounds = 0;
-                soundButton.innerHTML = "";
-                soundButton.innerHTML = "Activer le son";
+                soundButtonImg.src = "./soundOn.svg";
             } else if ( withSounds == 0 ){
                 withSounds = 1;
-                soundButton.innerHTML = "";
-                soundButton.innerHTML = "Couper le son";
+                soundButtonImg.src = "./soundOff.svg";
             }
         });
 
         // Lancer le jeu au clic sur le H2
-        document.querySelector( 'h2' ).addEventListener('mousedown', function(evt) {
+        document.querySelector( '.start' ).addEventListener('mousedown', function(evt) {
             withSounds == 1 ? oStart.play() : "";
-            var button = document.querySelector( 'h2' );
+            var button = document.querySelector( '.start' ),
+            	start_modal = document.querySelector( '.start_modal' );
             button.parentNode.removeChild(button);
+            start_modal.parentNode.removeChild(start_modal);
             oZone.generateBubble();
             oZone.generateBonus();
 			oZone.animate();
