@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr-BE">
+<head>
+    <meta charset="UTF-8">
+    <title>Petit jeu&nbsp;: Esquive</title>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+<body>
+    <h1>Jeu Esquive</h1>
+    <p class="info">Le but est simple, vous devez éviter les ronds et récupérer les carrés pour faire croître votre score. <br>Cliquez dans la zone ci-dessous pour démarrer.</p>
+    <a class="sounds">Couper le son</a>
+    <div class="gameZone">
+        <h2>Clic ici</h2>
+        <canvas id="canvas" width="960" height="550" >
+            <p>Votre navigateur ne supporte pas canvas, veuillez installer un navigateur récent.</p>
+            <p><a href="http://browsehappy.com">En cliquant sur ce lien.</a></p>
+        </canvas>
+    </div>
+    <p class="score">Votre score est de&nbsp;: <span class="scoreResult">0</span></p>
+    <script src="jeu.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
