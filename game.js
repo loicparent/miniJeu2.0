@@ -19,10 +19,16 @@
 			return console.error( 'Canvas n\'est pas supporté' );
 		}
 		this.context = this.canvas.getContext( "2d" );
-		this.width = this.canvas.width;
-		this.height = this.canvas.height;
+		this.width = window.innerWidth;
+		this.height = window.innerHeight;
 
-		var game = new window.Jeu( this );
+	    function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+	    }
+	    resizeCanvas();
+
+		var game = new window.Esquive( this );
 	};
 
 	oApplication.setup();
