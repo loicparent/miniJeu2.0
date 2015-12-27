@@ -183,9 +183,11 @@
             var soundButtonImg = document.querySelector( '.sounds img' );
             if( withSounds == 1 ){
                 withSounds = 0;
+                soundButton.title = "Activer le son"
                 soundButtonImg.src = "./soundOn.svg";
             } else if ( withSounds == 0 ){
                 withSounds = 1;
+                soundButton.title = "Couper le son"
                 soundButtonImg.src = "./soundOff.svg";
             }
         });
