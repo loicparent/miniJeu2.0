@@ -120,6 +120,7 @@
 			window.cancelAnimationFrame( iAnimationRequestId );
 			document.querySelector( '.endScore' ).innerHTML = nBonus;
 			document.querySelector( '.end_modal' ).classList.remove("hidden");
+			document.querySelector( '#canvas' ).classList.add("finish");
 			document.querySelector( '.restart' ).addEventListener( "click", function(){
 				window.location.reload( true );
 			}, false );
