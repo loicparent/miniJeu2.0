@@ -118,7 +118,16 @@
 
 		var gameOver = function (){
 			window.cancelAnimationFrame( iAnimationRequestId );
+			if ( readCookie( 'bestScore' ) === null ) {
+				console.log(readCookie);
+				createCookie( 'bestScore', nBonus, 365 );
+			} else {
+				if ( nBonus > readCookie( 'bestScore' ) ) {
+					createCookie( 'bestScore', nBonus, 365 );
+				}
+			}
 			document.querySelector( '.endScore' ).innerHTML = nBonus;
+			document.querySelector( '.bestScore' ).innerHTML = readCookie( 'bestScore' );
 			document.querySelector( '.end_modal' ).classList.remove("hidden");
 			document.querySelector( '#canvas' ).classList.add("finish");
 			document.querySelector( '.restart' ).addEventListener( "click", function(){
@@ -163,13 +172,51 @@
 	    };
 
 		// récupérer la position de la souris:
-        function getMousePos(canvas, evt) {
+        var getMousePos = function(canvas, evt) {
             var rect = canvas.getBoundingClientRect();
             return {
                 x: evt.clientX - rect.left,
                 y: evt.clientY - rect.top
             };
         }
+
+        // Créer un cookies avec le meilleurs score:
+        	// source = http://www.itx-technologies.com/blog/798-creer-et-gerer-un-cookie-en-javascript
+        function createCookie(name, value, days) {
+			// Le nombre de jour est spécifié
+			        if (days) {
+			var the_date = new Date();
+			// Converti le nombre de jour en millisecondes
+			the_date.setTime(the_date.getTime()+(days*24*60*60*1000));
+			var expire = "; expire="+the_date.toGMTString();
+			}
+			// Aucune value de days spécifiée
+			else var expire = "";
+			document.cookie = name+"="+value+expire+"; path=/";
+		}
+
+		// Lire la value du cookies:
+			// source = http://www.itx-technologies.com/blog/798-creer-et-gerer-un-cookie-en-javascript
+		function readCookie(name) {
+			// Ajoute le signe égale virgule au name
+	        // pour la recherche
+	        var name2 = name + "=";
+	        // Array contenant tous les cookies
+			var arrCookies = document.cookie.split(';');
+			// Cherche l'array pour le cookie en question
+			for(var i=0;i < arrCookies.length;i++) {
+				var a = arrCookies[i];
+				// Si c'est un espace, enlever
+                while (a.charAt(0)==' ') {
+                  a = a.substring(1,a.length);
+                }
+				if (a.indexOf(name2) == 0) {
+	              return a.substring(name2.length,a.length);
+	            }
+			}
+			        // Aucun cookie trouvé
+			return null;
+		}
 
         // Avoir la position quand on bouge la souris
 		canvas.addEventListener('mousemove', function(evt) {
@@ -203,6 +250,7 @@
             oZone.generateBubble();
             oZone.generateBonus();
 			oZone.animate();
+			console.log(document.cookie);
         });
 
 
