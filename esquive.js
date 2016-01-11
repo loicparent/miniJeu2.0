@@ -9,10 +9,12 @@
 		score = 0,
 		isGameOver = false,
 		nBonus = 0,
-        oStart = new Audio("./sounds/start.mp3"),
-        oGOSound = new Audio("./sounds/lose.mp3"),
-        oAddBubble = new Audio("./sounds/bubble+.mp3"),
-        withSounds = 1;
+        oStart = new Audio( "./sounds/start.mp3" ),
+        oGOSound = new Audio( "./sounds/lose.mp3" ),
+        oAddBubble = new Audio( "./sounds/bubble+.mp3" ),
+        withSounds = 1,
+        soundButton = document.querySelector( '.sounds' ),
+        soundButtonImg = document.querySelector( '.sounds img' );
 
 		var oZone = {
 
@@ -39,12 +41,12 @@
 			},
 			"update" : function(){
 				oZone.aBubbles.forEach( function( bubble ){
-		            if((bubble.x + bubble.radius > 0 + oApplication.width) || (bubble.x - bubble.radius < 0)){
+		            if( ( bubble.x + bubble.radius > 0 + oApplication.width ) || ( bubble.x - bubble.radius < 0 ) ){
 		                //withSounds == 1 ? bubble.bounce.play() : "";
 		                bubble.speedX = - bubble.speedX;
 		             }
 		             // vérifier si on ricoche sur le hauteur
-		             if((bubble.y + bubble.radius > 0 + oApplication.height) || (bubble.y - bubble.radius < 0)){
+		             if( ( bubble.y + bubble.radius > 0 + oApplication.height ) || ( bubble.y - bubble.radius < 0 ) ){
 		               // withSounds == 1 ? bubble.bounce.play() : "";
 		                bubble.speedY = - bubble.speedY;
 		             }
@@ -113,13 +115,12 @@
 			this.speedX = speedX;
 			this.speedY = speedY;
 			this.colour = colour;
-			this.bounce = new Audio("./sounds/bounce.mp3");
+			this.bounce = new Audio( "./sounds/bounce.mp3" );
 		};
 
 		var gameOver = function (){
 			window.cancelAnimationFrame( iAnimationRequestId );
 			if ( readCookie( 'bestScore' ) === null ) {
-				console.log(readCookie);
 				createCookie( 'bestScore', nBonus, 365 );
 			} else {
 				if ( nBonus > readCookie( 'bestScore' ) ) {
@@ -128,9 +129,9 @@
 			}
 			document.querySelector( '.endScore' ).innerHTML = nBonus;
 			document.querySelector( '.bestScore' ).innerHTML = readCookie( 'bestScore' );
-			document.querySelector( '.end_modal' ).classList.remove("hidden");
-			document.querySelector( '#canvas' ).classList.add("finish");
-			document.querySelector( '.restart' ).addEventListener( "click", function(){
+			document.querySelector( '.end_modal' ).classList.remove( 'hidden' );
+			document.querySelector( '#canvas' ).classList.add( 'finish' );
+			document.querySelector( '.restart' ).addEventListener( 'click', function(){
 				window.location.reload( true );
 			}, false );
 	    }
@@ -138,7 +139,7 @@
 	    var changeBonus = function() {
 	        // vérifier si on a touché le bonus
 	        if ( oZone.mouse.x > ( oZone.bonus.x - oZone.bonus.size ) && oZone.mouse.x < ( oZone.bonus.x ) && oZone.mouse.y > ( oZone.bonus.y - oZone.bonus.size ) && oZone.mouse.y < ( oZone.bonus.y ) ) {
-	            var bonusSound = new Audio("./sounds/bonus.mp3");
+	            var bonusSound = new Audio( "./sounds/bonus.mp3" );
 	            withSounds == 1 ? bonusSound.play() : "";
 	            nBonus++;
 		        var BonusSize = oZone.bonus.size;
@@ -172,7 +173,7 @@
 	    };
 
 		// récupérer la position de la souris:
-        var getMousePos = function(canvas, evt) {
+        var getMousePos = function( canvas, evt ) {
             var rect = canvas.getBoundingClientRect();
             return {
                 x: evt.clientX - rect.left,
@@ -182,36 +183,37 @@
 
         // Créer un cookies avec le meilleurs score:
         	// source = http://www.itx-technologies.com/blog/798-creer-et-gerer-un-cookie-en-javascript
-        function createCookie(name, value, days) {
+        var createCookie = function( name, value, days ) {
 			// Le nombre de jour est spécifié
-			        if (days) {
-			var the_date = new Date();
-			// Converti le nombre de jour en millisecondes
-			the_date.setTime(the_date.getTime()+(days*24*60*60*1000));
-			var expire = "; expire="+the_date.toGMTString();
+			if ( days ) {
+				var the_date = new Date();
+				
+				// Converti le nombre de jour en millisecondes
+				the_date.setTime( the_date.getTime()+( days*24*60*60*1000 ) );
+				var expire = "; expire="+the_date.toGMTString();
+			} else {
+				var expire = "";
 			}
-			// Aucune value de days spécifiée
-			else var expire = "";
-			document.cookie = name+"="+value+expire+"; path=/";
+			document.cookie = name + "=" + value + expire + "; path=/";
 		}
 
-		// Lire la value du cookies:
+		// Lire la valeur du cookies:
 			// source = http://www.itx-technologies.com/blog/798-creer-et-gerer-un-cookie-en-javascript
-		function readCookie(name) {
-			// Ajoute le signe égale virgule au name
+		var readCookie = function( name ) {
+			// Ajoute le signe égale virgule au nom
 	        // pour la recherche
 	        var name2 = name + "=";
 	        // Array contenant tous les cookies
-			var arrCookies = document.cookie.split(';');
+			var arrCookies = document.cookie.split( ';' );
 			// Cherche l'array pour le cookie en question
-			for(var i=0;i < arrCookies.length;i++) {
+			for( var i=0; i < arrCookies.length; i++ ) {
 				var a = arrCookies[i];
 				// Si c'est un espace, enlever
-                while (a.charAt(0)==' ') {
-                  a = a.substring(1,a.length);
+                while ( a.charAt( 0 )==' ' ) {
+                  a = a.substring( 1,a.length );
                 }
-				if (a.indexOf(name2) == 0) {
-	              return a.substring(name2.length,a.length);
+				if ( a.indexOf( name2 ) == 0 ) {
+	              return a.substring( name2.length,a.length );
 	            }
 			}
 			        // Aucun cookie trouvé
@@ -219,16 +221,14 @@
 		}
 
         // Avoir la position quand on bouge la souris
-		canvas.addEventListener('mousemove', function(evt) {
+		canvas.addEventListener( 'mousemove', function( evt ) {
             var mousePos = getMousePos(canvas, evt);            
-            oZone.mouse.x=mousePos.x;
-            oZone.mouse.y=mousePos.y;
-        });
+            oZone.mouse.x = mousePos.x;
+            oZone.mouse.y = mousePos.y;
+        } );
 
 		//Vérifier si on met le son ou pas
-        document.querySelector( '.sounds' ).addEventListener('click', function(evt) {
-            var soundButton = document.querySelector( '.sounds' );
-            var soundButtonImg = document.querySelector( '.sounds img' );
+        document.querySelector( '.sounds' ).addEventListener( 'click', function( evt ) {
             if( withSounds == 1 ){
                 withSounds = 0;
                 soundButton.title = "Activer le son"
@@ -238,20 +238,19 @@
                 soundButton.title = "Couper le son"
                 soundButtonImg.src = "./soundOff.svg";
             }
-        });
+        } );
 
         // Lancer le jeu au clic sur le H2
-        document.querySelector( '.start' ).addEventListener('mousedown', function(evt) {
+        document.querySelector( '.start' ).addEventListener( 'mousedown', function( evt ) {
             withSounds == 1 ? oStart.play() : "";
             var button = document.querySelector( '.start' ),
             	start_modal = document.querySelector( '.start_modal' );
-            button.parentNode.removeChild(button);
-            start_modal.parentNode.removeChild(start_modal);
+            button.parentNode.removeChild( button );
+            start_modal.parentNode.removeChild( start_modal );
             oZone.generateBubble();
             oZone.generateBonus();
 			oZone.animate();
-			console.log(document.cookie);
-        });
+        } );
 
 
 	};
