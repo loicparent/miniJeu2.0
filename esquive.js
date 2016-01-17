@@ -120,6 +120,7 @@
 
 		var gameOver = function (){
 			window.cancelAnimationFrame( iAnimationRequestId );
+			createCookie( 'sounds', withSounds, 365 );
 			if ( readCookie( 'bestScore' ) === null ) {
 				createCookie( 'bestScore', nBonus, 365 );
 			} else {
@@ -242,6 +243,16 @@
 
         // Lancer le jeu au clic sur le H2
         document.querySelector( '.start' ).addEventListener( 'mousedown', function( evt ) {
+			/* Script pour mettre en plein écran:
+			var body = document.body;
+ 
+			if(body.webkitRequestFullScreen) {
+				body.webkitRequestFullScreen();
+			}
+			else {
+				body.mozRequestFullScreen();
+			}
+			*/ 
             withSounds == 1 ? oStart.play() : "";
             var button = document.querySelector( '.start' ),
             	start_modal = document.querySelector( '.start_modal' );
@@ -252,6 +263,23 @@
 			oZone.animate();
         } );
 
+        // Check the cookies if sounds
+        if ( readCookie( 'sounds' ) === null ) {
+			createCookie( 'sounds', 1, 365 );
+		} else {
+			if ( readCookie( 'sounds' ) !== null ) {
+				if ( readCookie( 'sounds' ) === "0" ) {
+					withSounds = 0;
+					soundButton.title = "Activer le son"
+                	soundButtonImg.src = "./soundOn.svg";
+				}
+				if ( readCookie( 'sounds' ) === "1" ) {
+					withSounds = 1;
+					soundButton.title = "Couper le son"
+                	soundButtonImg.src = "./soundOff.svg";
+				}
+			}
+		}
 
 	};
 
