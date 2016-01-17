@@ -152,11 +152,31 @@ p span.scoreResult {
         Ajout de code
 *******************************/
 
+@-webkit-keyframes modalTop {
+    from { top: -20%; }
+    to { top: 10%; }
+}
+@-o-keyframes modalTop {
+    from { top: -20%; }
+    to { top: 10%; }
+}
+@-moz-keyframes modalTop {
+    from { top: -20%; }
+    to { top: 10%; }
+}
+@keyframes modalTop {
+    from { top: -20%; }
+    to { top: 10%; }
+}
+
 .modal {
     position: absolute;
     top: 10%; bottom: 70%;
     left: 0; right: 0;
     z-index: 200;
+    -webkit-animation: modalTop 0.3s ease;
+    -o-animation: modalTop 0.3s ease;
+    animation: modalTop 0.3s ease;
 }
 .modal div {
     position: relative;
